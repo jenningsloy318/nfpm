@@ -211,6 +211,9 @@ func (c *Config) expandEnvVars() {
 	c.Platform = os.Expand(c.Platform, c.envMappingFunc)
 	c.Arch = os.Expand(c.Arch, c.envMappingFunc)
 	for or := range c.Overrides {
+		if c.Overrides[or] == nil {
+			continue
+		}
 		c.Overrides[or].Conflicts = c.expandEnvVarsStringSlice(c.Overrides[or].Conflicts)
 		c.Overrides[or].Depends = c.expandEnvVarsStringSlice(c.Overrides[or].Depends)
 		c.Overrides[or].Replaces = c.expandEnvVarsStringSlice(c.Overrides[or].Replaces)
